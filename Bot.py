@@ -104,7 +104,7 @@ def deepseekSearch(message):
         )
         return
 
-    bot.send_chat_action(message.chat.id, 'печатает')
+    bot.send_chat_action(message.chat.id, 'typing')
     deepseekAnswer = askDeepseek(user_question)
     bot.send_message(message.chat.id, deepseekAnswer)
 
