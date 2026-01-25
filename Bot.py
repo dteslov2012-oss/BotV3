@@ -1,5 +1,4 @@
 import random
-
 import telebot
 import requests
 from datetime import datetime
@@ -8,6 +7,7 @@ import os
 import threading
 import time
 import sys
+from telebot import TeleBot
 
 TOKEN = os.environ.get('TELEGRAM_TOKEN')
 DEEPSEEK_API_KEY = os.environ.get('DEEPSEEK_API_KEY')
