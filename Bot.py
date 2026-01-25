@@ -21,7 +21,16 @@ MAX_TOKENS = 300
 API_URL = "https://api.deepseek.com/v1/chat/completions"
 user_usage = {}
 
-
+@bot.message_handler(commands=['img'])
+def sendImg(m):
+    #извлекаю то что нужно сгенерить
+    bot.reply_to(m, "Генерирую")
+    prompt = m.text.partition(' ')[2].strip()
+    seed = random.randint(0, 2_000_000_000)
+    #просим сгенерить картинку
+    url = f"https://pollinations.ai/{prompt}?width=768&height=768&seed={seed}&n=1"
+    r = requests.get(url, timeout=90, allow_redirects=True)
+    bot.send_photo(m.chat.id, r.content, caption="Готово ✅")
 
 def check_daily_limit(user_id):
     today = datetime.now().date().isoformat()
@@ -266,16 +275,7 @@ def run_bot():
                 print("⚠️ Много перезапусков, жду 60 секунд...")
                 time.sleep(60)
 
-@bot.message_handler(commands=['img'])
-def sendImg(m):
-    #извлекаю то что нужно сгенерить
-    bot.reply_to(m, "Генерирую")
-    prompt = m.text.partition(' ')[2].strip()
-    seed = random.randint(0, 2_000_000_000)
-    #просим сгенерить картинку
-    url = f"https://pollinations.ai/{prompt}?width=768&height=768&seed={seed}&n=1"
-    r = requests.get(url, timeout=90, allow_redirects=True)
-    bot.send_photo(m.chat.id, r.content, caption="Готово ✅")
+
 
 # ========== ЗАПУСК ВСЕГО ПРИЛОЖЕНИЯ ==========
 if __name__ == '__main__':
