@@ -1,3 +1,5 @@
+import random
+
 import telebot
 import requests
 from datetime import datetime
@@ -263,6 +265,17 @@ def run_bot():
             if restart_count > 5:
                 print("⚠️ Много перезапусков, жду 60 секунд...")
                 time.sleep(60)
+
+@bot.message_handler(commands=['img'])
+def sendImg(m):
+    #извлекаю то что нужно сгенерить
+    bot.reply_to(m, "Генерирую")
+    prompt = m.text.partition(' ')[2].strip()
+    seed = random.randint(0, 2_000_000_000)
+    #просим сгенерить картинку
+    url = f"https://image.pollinations.ai/prompt/{prompt}?width=768&height=768&seed={seed}&n=1"
+    r = requests.get(url, timeout=90, allow_redirects=True)
+    bot.send_photo(m.chat.id, r.content, caption="Готово ✅")
 
 # ========== ЗАПУСК ВСЕГО ПРИЛОЖЕНИЯ ==========
 if __name__ == '__main__':
