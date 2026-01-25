@@ -29,7 +29,7 @@ def sendImg(m):
     seed = random.randint(0, 2_000_000_000)
     #просим сгенерить картинку
     url = f"https://image.pollinations.ai/{prompt}?width=768&height=768&seed={seed}&n=1"
-    r = requests.get(url, timeout=90, allow_redirects=True)
+    r = requests.get(url, timeout=60, allow_redirects=True)
     bot.send_photo(m.chat.id, r.content, caption="Готово ✅")
 
 def check_daily_limit(user_id):
